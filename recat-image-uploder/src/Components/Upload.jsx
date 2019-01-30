@@ -48,9 +48,6 @@ class Upload extends React.Component {
                     return (<img key={index} src={source} alt={`image ${index + 1}`} />)
                 })}
 
-                <img ref={this.imgOutput} src="#" alt="My Image" />
-
-
             </div>
         )
     }
