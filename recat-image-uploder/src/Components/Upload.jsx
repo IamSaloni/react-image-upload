@@ -1,10 +1,13 @@
 import React from 'react'
 
 class Upload extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.fileInput = React.createRef()
         this.imgOutput = React.createRef()
+        this.state = {
+            sources: []
+        }
     }
     // componentDidMount() {
     //     console.log(this.fileInput.files);
@@ -13,17 +16,23 @@ class Upload extends React.Component {
     handleOnSubmit(event) {
         event.preventDefault();
     }
-    
 
-    handleOnchange(event){
-       console.log(event);
-       console.log(this.fileInput.current.files);
-       let reader = new FileReader()
-       reader.onload = (event)=>{
-                this.imgOutput.current.src = event.target.result
-                
-       }
-       reader.readAsDataURL(this.fileInput.current.files[0])
+
+    handleOnchange(event) {
+        console.log(event);
+        console.log(this.fileInput.current.files);
+
+        Object.keys(this.fileInput.current.files).forEach((key, index) => {
+            let reader = new FileReader()
+            reader.onload = (event) => {
+                // this.imgOutput.current.src = event.target.result
+                this.setState({
+                    sources: [...this.state.sources, event.target.result]
+                })
+
+            }
+            reader.readAsDataURL(this.fileInput.current.files[key])
+        })
 
 
     }
@@ -31,11 +40,16 @@ class Upload extends React.Component {
     render() {
         return (
             <div>
-            Upload Images
+                Upload Images
                 <form onSubmit={(event) => this.handleOnSubmit(event)}>
-                    <input ref={this.fileInput} onChange={(event)=>this.handleOnchange(event)} type="file" name="myFile" accept="image/png, image/jpeg ,image/jpg" multiple />
+                    <input ref={this.fileInput} onChange={(event) => this.handleOnchange(event)} type="file" name="myFile" accept="image/png, image/jpeg ,image/jpg" multiple />
                 </form>
-                <img ref={this.imgOutput} src= "#" alt="My Image"/>
+                {this.state.sources.map((source, index) => {
+                    return (<img key={index} src={source} alt={`image ${index + 1}`} />)
+                })}
+
+                <img ref={this.imgOutput} src="#" alt="My Image" />
+
 
             </div>
         )
