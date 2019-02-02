@@ -19,6 +19,7 @@ class Upload extends React.Component {
             files: [...this.state.files, {
                 source: evt.target.result,
                 name: file.name
+               
             }]
         })
     }
@@ -34,6 +35,15 @@ class Upload extends React.Component {
             })(this.fileInput.current.files[key]);
             reader.readAsDataURL(this.fileInput.current.files[key])
         })
+    }
+
+    handleOnClick(event, name) {
+            console.log(name);
+            this.setState({
+                files: this.state.files.filter((file)=>{
+                            return name !== file.name
+                })
+            })
     }
 
     render() {
@@ -55,7 +65,7 @@ class Upload extends React.Component {
                                     <img src={source} alt={`image ${index + 1}`}  />
                                     <div className="desc">
                                         <div className="caption"> { name } </div>
-                                        <button>Delete</button>
+                                        <button onClick={(event)=>{this.handleOnClick(event,name)}}>Delete</button>
                                     </div>
                                 </div>);
                     })}
