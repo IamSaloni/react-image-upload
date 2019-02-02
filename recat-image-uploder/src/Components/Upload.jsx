@@ -5,7 +5,8 @@ class Upload extends React.Component {
         super(props);
         this.fileInput = React.createRef();
         this.state = {
-            files: []
+            files: [],
+            deleteFiles: []
         }
         this.pushFileInState = this.pushFileInState.bind(this);
     }
@@ -19,10 +20,20 @@ class Upload extends React.Component {
             files: [...this.state.files, {
                 source: evt.target.result,
                 name: file.name
-               
             }]
         })
     }
+
+    handleOnClick () {
+        this.setState({
+            files: this.state.files.filter((file)=>{
+                return !(this.state.deleteFiles.includes(file.name))
+            })
+        }, this.setState({
+            deleteFiles: []
+        }))
+    }
+
 
     handleOnchange(event) {
         Object.keys(this.fileInput.current.files).forEach((key) => {
@@ -37,19 +48,26 @@ class Upload extends React.Component {
         })
     }
 
-    handleOnClick(event, name) {
-            console.log(name);
+    handleCheckbox (e, name) {
+        if(e.target.checked){
             this.setState({
-                files: this.state.files.filter((file)=>{
-                            return name !== file.name
+                deleteFiles: [...this.state.deleteFiles, name ]
+            });
+        }
+        else {
+            this.setState({
+                deleteFiles: this.state.deleteFiles.filter((fileName)=>{
+                    return fileName !== name
                 })
-            })
+            });
+        }
     }
-
     render() {
+        console.log(this.state.deleteFiles)
         return (
             <div>
                 Upload Images
+
                 <form onSubmit={(event) => this.handleOnSubmit(event)}>
                     <input ref={this.fileInput}
                         onChange={(event) => this.handleOnchange(event)}
@@ -59,13 +77,14 @@ class Upload extends React.Component {
                         multiple
                         className="browse-button"/>
                 </form>
+                <button style={ (this.state.deleteFiles.length) ? {} : {display:'none'}} onClick={() => this.handleOnClick()}>Delete</button>
                 <div className="flex-container">
                     {this.state.files.map(({source, name}, index) => {
                         return (<div key={`image ${index + 1}`}  className="item">
-                                    <img src={source} alt={`image ${index + 1}`}  />
+                                    <img src={source} alt={ name }  />
                                     <div className="desc">
                                         <div className="caption"> { name } </div>
-                                        <button onClick={(event)=>{this.handleOnClick(event,name)}}>Delete</button>
+                                        <input type="checkbox" checked={this.state.deleteFiles.includes(name)} onChange={(event)=> this.handleCheckbox(event, name)}/>
                                     </div>
                                 </div>);
                     })}
