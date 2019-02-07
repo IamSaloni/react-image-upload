@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Upload from './Components/Upload'
-import Name from './Components/Name'
+import Clock from './Components/Clock'
 import Kitty from './Components/Kitty'
 
 
@@ -23,7 +23,7 @@ class App extends Component {
     return (
       <div className="App">
         <Upload />
-        <Name />
+        <Clock date={new Date()}/>
         <Kitty author={comment.author}
               text={comment.text}
               date={comment.date}/>
