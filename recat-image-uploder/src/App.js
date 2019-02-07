@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Upload from './Components/Upload'
-import Names from './Components/Names'
+import Name from './Components/Name'
 
 
 
@@ -11,7 +11,9 @@ class App extends Component {
     return (
       <div className="App">
         <Upload />
-        <Names />
+        <Name />
+        
+       
       </div>
     );
   }
