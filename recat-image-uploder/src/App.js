@@ -28,9 +28,7 @@ class App extends Component {
               text={comment.text}
               date={comment.date}/>
         
-        
-       
-      </div>
+        </div>
     );
   }
 }

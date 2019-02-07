@@ -1,4 +1,5 @@
 import React from 'react'
+import Avatar from './Avatar'
 
 
 function formatDate(date){
@@ -8,7 +9,7 @@ function formatDate(date){
 const Kitty = (props)=>{
         return (
             <div>
-                <img src={props.author.avatarUrl} alt={props.author.name}/>
+                <Avatar user={props.author} />
                 <div>
                     {props.author.name}
                 </div>
