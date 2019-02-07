@@ -4,6 +4,7 @@ import './App.css';
 import Upload from './Components/Upload'
 import Clock from './Components/Clock'
 import Kitty from './Components/Kitty'
+import Toggle from './Components/Toggle'
 
 
 
@@ -23,10 +24,11 @@ class App extends Component {
     return (
       <div className="App">
         <Upload />
-        <Clock date={new Date()}/>
+        <Clock/>
         <Kitty author={comment.author}
               text={comment.text}
               date={comment.date}/>
+              <Toggle />
         
         </div>
     );
